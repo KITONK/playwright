@@ -11,4 +11,5 @@ Testing the [Demoblaze](https://www.demoblaze.com/) website
 - Enter the command `npx playwright test`
 
 The result should be like this:
+
 ![Result test](/result/result.jpg)
