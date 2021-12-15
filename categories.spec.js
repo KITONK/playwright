@@ -1,16 +1,19 @@
 const { test, expect } = require('@playwright/test');
+const { Categories } = require('./page_objects/categories');
 
 test('test', async ({ page }) => {
 
-    await page.goto('https://www.demoblaze.com/');
+    const category = new Categories(page);
 
-    await page.click('text=Phones');
+    await category.homePage();
+
+    await category.click('text=Phones');
     await expect(page).toHaveURL('https://www.demoblaze.com/#');
 
-    await page.click('text=Nokia lumia 1520');
+    await category.click('text=Nokia lumia 1520');
     await expect(page).toHaveURL('https://www.demoblaze.com/prod.html?idp_=2');
 
-    await page.click('text=Add to cart');
+    await category.click('text=Add to cart');
     await expect(page).toHaveURL('https://www.demoblaze.com/prod.html?idp_=2#');
 
     page.once('dialog', dialog => {
@@ -18,18 +21,20 @@ test('test', async ({ page }) => {
 		dialog.dismiss().catch(() => {});
 	});
 
-    await page.click('text=Cart');
+    await category.click('text=Cart');
     await expect(page).toHaveURL('https://www.demoblaze.com/cart.html');
 
-    await page.click('.btn-success:has-text("Place Order")');
+    await category.click('.btn-success:has-text("Place Order")');
 
-    await page.fill('#name', 'admin');
-    await page.fill('#country', 'Ukraine');
-    await page.fill('#city', 'Kiev');
-    await page.fill('#card', '123456789012345');
-    await page.fill('#month', '10');
-    await page.fill('#year', '2027');
+    await category.fill('#name', 'admin');
+    await category.fill('#country', 'Ukraine');
+    await category.fill('#city', 'Kiev');
+    await category.fill('#card', '123456789012345');
+    await category.fill('#month', '10');
+    await category.fill('#year', '2027');
 
-    await page.click('text=Purchase');
-	await page.click('button:has-text("OK")');
+    await category.click('text=Purchase');
+	await category.click('button:has-text("OK")');
+
+    await category.makeScreenshot();
 });

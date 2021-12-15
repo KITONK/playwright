@@ -1,20 +1,25 @@
 const { test, expect } = require('@playwright/test');
+const { LogIn } = require('./page_objects/log_in');
 
 test('test', async ({ page }) => {
 
-  await page.goto('https://www.demoblaze.com/');
+  const logIn = new LogIn(page);
 
-  await page.click('a:has-text("Log in")');
+  await logIn.homePage();
+
+  await logIn.click('a:has-text("Log in")');
   
-  await page.fill('#loginusername', 'admin');
-  await page.fill('#loginpassword', 'admin');
+  await logIn.logIn('#loginusername', 'admin');
+  await logIn.logIn('#loginpassword', 'admin');
 
   await Promise.all([
     page.waitForNavigation(),
-    page.click('button:has-text("Log in")')
+    logIn.click('button:has-text("Log in")')
   ]);
   ;
-  await page.click('text=Welcome admin');
+  await logIn.click('text=Welcome admin');
   await expect(page).toHaveURL('https://www.demoblaze.com/#');
+
+  await logIn.makeScreenshot();
   
 });
