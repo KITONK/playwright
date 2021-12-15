@@ -1,9 +1,6 @@
 const { test, expect } = require('@playwright/test');
-// const { SignUp } = require('./models/sign_up');
 
 test('test', async ({ page }) => {
-
-    // const signUp = new SignUp(page);
 
     await page.goto('https://www.demoblaze.com');
 
